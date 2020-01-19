@@ -6,4 +6,17 @@ class AssignMailer < ApplicationMailer
     @password = password
     mail to: @email, subject: I18n.t('views.messages.complete_registration')
   end
+
+  def change_leader_mail(email, team)
+    @email = email
+    @team = team
+    mail to: @email, subject: 'リーダーにアサインされました。'
+  end
+
+  def delete_agenda_mail(team, agenda, email)
+    @team = team
+    @agenda = agenda
+    @email = email
+    mail to: @email, subject: 'アジェンダが削除されました。'
+  end
 end

@@ -42,6 +42,9 @@
                       <td><%= image_tag 'default.jpg', size: '40x40' %></td>
                       <td><%= assign.user.email %></td>
                       <td><%= link_to I18n.t('views.button.delete'), team_assign_path(@team, assign), method: :delete, class: 'btn btn-sm btn-danger' %></td>
+                      <% if assign.user_id != @team.owner.id && current_user == @team.owner %>
+                        <td><%= link_to "権限移譲", team_assign_path(@team, assign), method: :put, class: 'btn btn-sm btn-primary' %></td>
+                      <% end %>
                     </tr>
                   <% end %>
                 </tbody>
