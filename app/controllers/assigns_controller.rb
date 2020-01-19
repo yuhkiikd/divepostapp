@@ -19,10 +19,30 @@ class AssignsController < ApplicationController
     redirect_to team_url(params[:team_id]), notice: destroy_message
   end
 
+  def update
+    team = Team.friendly.find(team_params)
+    if current_user.id == team.owner_id
+      assign = Assign.find(params[:id])
+      team.owner_id = assign.user_id
+      if team.save
+        user = User.find(assign.user_id)
+        redirect_to team_url(team), notice: '権限を移譲しました。'
+      else
+        redirect_to team_url(team), notice: '権限移譲にできませんでした。'
+      end
+    else
+      redirect_to team_url(team), notice: '権限移動はリーダーしか出来ません'
+    end
+  end
+
   private
 
   def assign_params
     params[:email]
+  end
+
+  def team_params
+    params[:team_id]
   end
 
   def assign_destroy(assign, assigned_user)
