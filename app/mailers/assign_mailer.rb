@@ -12,4 +12,11 @@ class AssignMailer < ApplicationMailer
     @team = team
     mail to: @email, subject: 'リーダーにアサインされました。'
   end
+
+  def delete_agenda_mail(team, agenda, email)
+    @team = team
+    @agenda = agenda
+    @email = email
+    mail to: @email, subject: 'アジェンダが削除されました。'
+  end
 end
